@@ -1,73 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+1. Create Postgres Database
+  a. To create a Postgres database, use the command 'docker compose up dev-db -d' in the terminal. This will create a Postgres database instance.
+  b. Alternatively, you can edit the database URL in the file 'src/prisma.prisma.service.ts'.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+2. Install NPM Packages
+  a. To install the necessary npm packages, enter the command 'npm install' in the terminal.
+  
+3. Update your Prisma schema
+  a. To apply the migrations run -> 'npx prisma migrate dev' then wipe previous data and provide new migration name - eg :prismamig 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+3. Run Server
+  a. To run the server, enter the command 'npm run start dev' in the terminal. This will start the server and allow you to access the API.
 
-## Description
+4. GET http://localhost:5000/employee
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+   This endpoint is used to retrieve a list of all employees in the system.
 
-## Installation
+   **Request**
 
-```bash
-$ npm install
-```
+   No request body is required.
+   
+5. POST http://localhost:5000/employee
 
-## Running the app
+    Description:
+    This endpoint is used to create a new employee record.
 
-```bash
-# development
-$ npm run start
+    URL Params:
+    None
 
-# watch mode
-$ npm run start:dev
+    Body Params:
+    - name (string): The name of the employee.
+    - designation (string): designation of the employee.
+    - empType (string): The type of the employee.
+    - experience (string): years of experience of the employee.
 
-# production mode
-$ npm run start:prod
-```
+    Success Response:
+    Code: 200 
+    Content: {
+        "id": [integer],
+        "name": [string],
+        "experience": [string],
+        "empType": [string],
+        "designation": [string]
+    }
 
-## Test
+    Error Response:
+    Code: 400 
+    Content: {
+        "error": "Bad Request"
+    }
 
-```bash
-# unit tests
-$ npm run test
+6. PUT http://localhost:5000/employee/{employee_id}
 
-# e2e tests
-$ npm run test:e2e
+    Description:
+    This endpoint allows users to update an existing employee.
 
-# test coverage
-$ npm run test:cov
-```
+    Body:
+    { 
+        "field1": "value1",
+        "field2": "value2"
+    }
 
-## Support
+    Response:
+    Status Code: 200 OK
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    Body:
+    {
+        "success": true,
+        "data": {
+            "field1": "value1",
+            "field2": "value2"
+        }
+    }
 
-## Stay in touch
+    7. DELETE http://localhost:5000/employee/{employee_id}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    Description:
+    This endpoint is used to delete an existing employee from the system.
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+    Parameters: 
+    id - The employee's ID (required).
